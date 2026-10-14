@@ -44,15 +44,19 @@ export const register: Register = on => {
   })
 
   on('ui.render', { component: 'AbovePrompt' }, async ($, e, next) => {
+    const rest = await next(e)
     const m = await read($, meter)
-    if (e.props.hasSurvey || m === null) return next(e)
+    if (e.props.hasSurvey || m === null) return rest
     const text = summarize(m)
-    if (!text) return next(e)
+    if (!text) return rest
 
     const { Box, Text } = $.ui.resolve(e)
     return (
-      <Box justifyContent="flex-end">
-        <Text dimColor>{text}</Text>
+      <Box flexDirection="column">
+        {rest}
+        <Box justifyContent="flex-end">
+          <Text dimColor>{text}</Text>
+        </Box>
       </Box>
     )
   })

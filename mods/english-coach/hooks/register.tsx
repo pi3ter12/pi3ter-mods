@@ -176,15 +176,18 @@ export const register: Register = on => {
       await $.clock.sleep(200)
       await $.prompt.fill({ text: e.text, mode: 'replace' })
     })().catch(() => {})
-    return { drop: 'English coach: pick a version below' }
+    return { drop: 'coach' }
   })
 
   on('ui.render', { component: 'AbovePrompt' }, async ($, e, next) => {
     const n = await read($, note)
-    if (!n || e.props.hasSurvey) return next(e)
+    const rest = await next(e)
+    if (!n || e.props.hasSurvey) return rest
     const { Box, Text, Button } = $.ui.resolve(e)
     const parts = diffWords(n.original, n.fixed)
     return (
+      <Box flexDirection="column">
+      {rest}
       <Box flexDirection="column" borderStyle="round" borderColor="yellow" paddingX={1}>
         <Text dimColor>English coach{n.why ? `: ${n.why}` : ''}</Text>
         <Text>
@@ -207,6 +210,7 @@ export const register: Register = on => {
           <Text> </Text>
           <Button key="edit" label="Edytuj" onPress={() => clear($)} />
         </Box>
+      </Box>
       </Box>
     )
   })
