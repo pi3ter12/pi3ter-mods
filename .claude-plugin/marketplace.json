@@ -1,9 +1,24 @@
 {
   "name": "pi3ter-mods",
-  "owner": { "name": "wiacekp" },
-  "description": "Personal Claude Code mods: usage meter and English coach",
+  "owner": {
+    "name": "wiacekp"
+  },
+  "description": "Personal Claude Code mods: usage meter, English coach and translator",
   "plugins": [
-    { "name": "usage-meter", "source": "./mods/usage-meter", "description": "Plan limit usage (5h/7d) shown above the prompt" },
-    { "name": "english-coach", "source": "./mods/english-coach", "description": "On Enter, Haiku checks your English; wrong prompts are held back with a correction, translation and shortcut" }
+    {
+      "name": "usage-meter",
+      "source": "./mods/usage-meter",
+      "description": "Plan limit usage (5h/7d) shown above the prompt"
+    },
+    {
+      "name": "english-coach",
+      "source": "./mods/english-coach",
+      "description": "On Enter, Haiku checks your English; wrong prompts are held back with a correction, translation and shortcut"
+    },
+    {
+      "name": "translator",
+      "source": "./mods/translator",
+      "description": "/translator opens a pane that translates Polish to English with Haiku"
+    }
   ]
 }
