@@ -8,7 +8,6 @@ const note = atom({ plugin: 'english-coach', key: 'note' } as const, null)
 const MODEL = 'claude-haiku-5-5'
 const TIMEOUT_MS = 6000
 const CATEGORIES = ['articles', 'tenses', 'prepositions', 'word-order', 'vocabulary', 'spelling', 'punctuation', 'other']
-const ACCEPT_KEYS = ['tab', 'y'] // Tab, or Ctrl+Y
 
 export const SYSTEM = `You are an English writing coach for a Polish speaker. You get one chat message they wrote in English.
 Reply with exactly four lines:
@@ -95,7 +94,7 @@ export const statsText = (log: string, today: string, path: string): string => {
   return `English coach: ${rows.length} mistakes logged (${week} in the last 7 days).\nMost common: ${top.join(', ')}\nLog: ${path}`
 }
 
-// The text held back last (pressing Enter again on it sends it as typed) and the correction shown for it.
+// The text held back last (pressing Enter again on it sends the corrected version) and the correction shown for it.
 let held: string | null = null
 let current: Note | null = null
 
@@ -140,23 +139,13 @@ export const register: Register = on => {
     return { text: `English coach is ${(await isEnabled($)) ? 'on' : 'off'}. Use /coach on | off | stats.` }
   })
 
-  // Shortcut: Tab or Ctrl+Y sends the corrected version while a correction is shown.
-  on('prompt.edit', async ($, e, next) => {
-    const k = e.key
-    if (current && held !== null && e.text.trim() === held && k && ACCEPT_KEYS.includes(k.key) && (k.key === 'tab' || k.ctrl)) {
-      const fixed = current.fixed
-      void send($, fixed).catch(() => {})
-      return { text: e.text, cursor: e.cursor }
-    }
-    return next(e)
-  })
-
   // On Enter, Haiku checks the prompt (no history, so the conversation's context is untouched).
   // Correct: it is sent as typed. Otherwise it is held back and the person picks which version to send.
   on('prompt.submit', async ($, e, next) => {
-    if (held !== null && e.text.trim() === held && e.origin?.kind !== 'plugin') {
+    if (current && held !== null && e.text.trim() === held && e.origin?.kind !== 'plugin') {
+      const fixed = current.fixed
       await clear($)
-      return next(e)
+      return next({ ...e, text: fixed })
     }
     await clear($)
     if (e.command || e.isMeta || e.origin?.kind === 'plugin' || !shouldCoach(e.text) || !(await isEnabled($))) return next(e)
@@ -211,7 +200,7 @@ export const register: Register = on => {
         </Text>
         {n.polish ? <Text dimColor italic>PL: {n.polish}</Text> : null}
         <Box>
-          <Text dimColor>Enter: moje · Tab / Ctrl+Y: poprawione   </Text>
+          <Text dimColor>Enter: poprawione   </Text>
           <Button key="fixed" label="Poprawione" onPress={() => send($, n.fixed)} />
           <Text> </Text>
           <Button key="mine" label="Moje" onPress={() => send($, n.original)} />
