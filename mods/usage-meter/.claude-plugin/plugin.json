@@ -1,0 +1,7 @@
+{
+  "name": "usage-meter",
+  "version": "0.1.1",
+  "description": "Cost/Usage Meter: plan limit usage (5h/7d) and cost in the current session",
+  "author": { "name": "wiacekp" },
+  "types": "./types/index.d.ts"
+}

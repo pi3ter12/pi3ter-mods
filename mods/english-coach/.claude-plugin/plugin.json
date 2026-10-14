@@ -1,0 +1,1 @@
+{ "name": "english-coach", "version": "0.9.0", "description": "On Enter, Haiku checks the prompt; wrong ones are held back with a correction and translation", "author": { "name": "wiacekp" }, "types": "./types/index.d.ts" }
