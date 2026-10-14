@@ -7,6 +7,7 @@ Personal Claude Code mods, installed as one marketplace.
 | `usage-meter` | Shows plan limit usage (5h / week) and the reset time above the prompt; a toast at 90%. |
 | `english-coach` | On Enter, Haiku (`claude-haiku-5-5`) checks the prompt. Correct: sent as is. Wrong: held back with a word diff, a short Polish note and a Polish translation. Enter again sends the corrected one; the Moje button sends yours. |
 | `translator` | `/translator` opens a pane (Esc closes it): type Polish, press Enter, get an English translation from Haiku (`claude-haiku-5-5`). |
+| `pl-msg` | `/pl-msg` translates the last assistant message into Polish (`claude-haiku-5-5`) in a side pane (Esc closes it). |
 
 ## Install on another computer
 
@@ -15,6 +16,7 @@ Personal Claude Code mods, installed as one marketplace.
 /plugin install usage-meter@pi3ter-mods
 /plugin install english-coach@pi3ter-mods
 /plugin install translator@pi3ter-mods
+/plugin install pl-msg@pi3ter-mods
 /reload-plugins
 ```
 

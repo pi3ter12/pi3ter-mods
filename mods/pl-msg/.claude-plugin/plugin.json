@@ -1,0 +1,1 @@
+{ "name": "pl-msg", "version": "0.1.0", "description": "/pl-msg translates the last assistant message into Polish in a side pane", "author": { "name": "wiacekp" }, "types": "./types/index.d.ts" }

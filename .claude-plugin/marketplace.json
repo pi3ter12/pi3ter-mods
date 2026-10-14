@@ -3,7 +3,7 @@
   "owner": {
     "name": "wiacekp"
   },
-  "description": "Personal Claude Code mods: usage meter, English coach and translator",
+  "description": "Personal Claude Code mods: usage meter, English coach, translator and pl-msg",
   "plugins": [
     {
       "name": "usage-meter",
@@ -19,6 +19,11 @@
       "name": "translator",
       "source": "./mods/translator",
       "description": "/translator opens a pane that translates Polish to English with Haiku"
+    },
+    {
+      "name": "pl-msg",
+      "source": "./mods/pl-msg",
+      "description": "/pl-msg translates the last assistant message into Polish in a side pane"
     }
   ]
 }
